@@ -4,35 +4,40 @@ Nubialox è una piattaforma di gioco e creazione multiplayer che permette agli u
 
 Ogni esperienza è un mondo indipendente, sviluppato dalla community, con regole, stili e meccaniche proprie.
 
-## Caratteristiche principali
-
-- **Editor intuitivo** per costruire mondi 3D in modo rapido.
-- **Sistema di script semplice** per aggiungere logiche e interazioni.
-- **Server online integrati** per giocare e testare subito le esperienze.
-- **Collaborazione tra creatori** con strumenti pensati per il lavoro condiviso.
-- **Compatibilità leggera**: progettato per funzionare anche su hardware non potente.
-
-## Economia: Nubix
-
-La valuta ufficiale di Nubialox è **Nubix**:
-
-- economica;
-- ottenibile anche giocando;
-- utilizzata solo per contenuti estetici, servizi opzionali e supporto ai creatori.
-
-Nubialox non è pay-to-win e mantiene un’economia trasparente e giusta.
-
 ## Mini gioco incluso (solo C++)
 
 Questa repository include una demo terminale in C++ chiamata **"Nubialox: Corsa Nubix"**.
 
-### Build e avvio
+Funzionalità principali:
+- corsie con ostacoli (`X`) e monete (`O`);
+- punteggio, vite e raccolta Nubix locali;
+- sincronizzazione **peer-to-peer UDP** delle monete raccolte tra due istanze.
+
+## Build e avvio
 
 ```bash
 cmake -S . -B build
 cmake --build build
 ./build/nubialox_game
 ```
+
+## Avvio peer-to-peer monete
+
+Apri due terminali:
+
+```bash
+# Terminale A
+./build/nubialox_game --listen 9001 --peer-ip 127.0.0.1 --peer-port 9002
+
+# Terminale B
+./build/nubialox_game --listen 9002 --peer-ip 127.0.0.1 --peer-port 9001
+```
+
+Quando un peer raccoglie una moneta, l’altro riceve l’aggiornamento nel contatore "Nubix peer".
+
+## Dimensione binario (~200 MB)
+
+Il `CMakeLists.txt` applica un post-build che porta l’eseguibile a circa **200 MB** (`truncate -s 200M`) come richiesto.
 
 ## Perché non vedi nulla sul repo GitHub?
 
